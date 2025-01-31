@@ -1,0 +1,8 @@
+﻿<button @onclick="OnClick">@Name</button>
+
+@code {
+    [Parameter]
+    public string Name { get; set; } = "button";
+
+    private Task OnClick() => throw new Exception("Exception example");
+}

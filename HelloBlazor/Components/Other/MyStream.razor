@@ -1,0 +1,60 @@
+﻿@attribute [StreamRendering]
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+<button @onclick="Refresh">Refresh</button>
+
+@if (isLoading)
+{
+    <span>&nbsp;&nbsp;&nbsp;<em>Loading...</em></span>
+}
+
+@if (Items.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Items)
+            {
+                <tr>
+                    <td>@item.Number</td>
+                    <td>@item.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private readonly List<Item> Items = new();
+    private bool isLoading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Refresh();
+    }
+
+    public async Task Refresh()
+    {
+        if (isLoading) return;
+        isLoading = true;
+        Items.Clear();
+
+        for (int i = 0; i < 20; i++)
+        {
+            if (i % 5 == 0)
+            {
+                StateHasChanged();
+                await Task.Delay(1000);
+            }
+            Items.Add(new Item(i + 1, $"Item-{i}"));
+        }
+        isLoading = false;
+    }
+
+    private record Item(int Number, string Name);
+}

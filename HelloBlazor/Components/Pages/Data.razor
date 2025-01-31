@@ -1,0 +1,32 @@
+﻿@page "/data"
+@rendermode InteractiveServer
+
+@using Microsoft.AspNetCore.Components.QuickGrid
+
+<h3>Data</h3>
+
+<QuickGrid items="Items" Pagination="pagination">
+    <PropertyColumn Property="@(p => p.Number)" Sortable="true" />
+    <PropertyColumn Property="@(p => p.Name)" Sortable="true" />
+</QuickGrid>
+<Paginator State="pagination" />
+
+@code {
+    private PaginationState pagination = new() { ItemsPerPage = 15 };
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        const int size = 50;
+        var items = new Item[size];
+        for (int i = 1; i <= size; i++)
+        {
+            items[i - 1] = new Item(i, $"Item - {i:00}");
+        }
+        Items = items.AsQueryable();
+    }
+
+    private record Item(int Number, string Name);
+
+    private IQueryable<Item> Items = null!;
+}

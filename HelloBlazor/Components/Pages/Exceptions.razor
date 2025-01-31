@@ -1,0 +1,35 @@
+﻿@page "/exceptions"
+@rendermode InteractiveServer
+
+<h3>Exceptions</h3>
+
+<p>Error with message: <code>An unhandled error has occurred. Reload</code></p>
+<button @onclick="Ex1">Example-1</button>
+
+<hr />
+
+<p>Error with <code>ErrorBoundary</code></p>
+<ErrorBoundary>
+    <MyErrorButton Name="Example-2" />
+</ErrorBoundary>
+
+<hr />
+
+<p>Error with <code>ErrorBoundary</code> and message</p>
+<ErrorBoundary>
+    <ChildContent>
+        <MyErrorButton Name="Example-3" />
+    </ChildContent>
+    <ErrorContent>
+        <p>Error message: <span style="color:red">@context.Message</span></p>
+    </ErrorContent>
+</ErrorBoundary>
+
+<hr />
+
+@code {
+    private void Ex1()
+    {
+        throw new Exception("Exception-1");
+    }
+}

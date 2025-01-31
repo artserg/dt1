@@ -1,0 +1,44 @@
+﻿@using System.ComponentModel.DataAnnotations
+
+@page "/form"
+@rendermode InteractiveServer
+
+<h3>Example of form</h3>
+
+<EditForm Model="item" FormName="main" OnValidSubmit="Submit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <p>
+        Name:<br/>
+        <InputText id="name" @bind-Value="item.Name" />
+    </p>
+    <p>
+        Number:<br/>
+        <InputNumber id="number" @bind-Value="item.Number" />
+    </p>
+    <button type="submit">Submit</button>&nbsp;&nbsp;&nbsp;<button type="button" @onclick="@(() => item = new())">Reset form</button>
+</EditForm>
+
+<hr />
+
+<span>@submitted</span>
+
+@code {
+    private string submitted = "";
+    private Item item = new();
+
+    private void Submit()
+    {
+        submitted = $"Form is submitted: {item.Name} - {item.Number}";
+    }
+
+    public class Item
+    {
+        [Required]
+        [StringLength(10, MinimumLength = 3)]
+        public string? Name { get; set; }
+        [Required]
+        [Range(1, 10)]
+        public int? Number { get; set; }
+    }
+}

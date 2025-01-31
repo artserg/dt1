@@ -1,0 +1,19 @@
+﻿@page "/components"
+@rendermode InteractiveServer
+
+<h3>Components</h3>
+
+<p>Page contains two components: counter and button</p>
+
+<Counter/>
+
+<hr />
+
+<h4>Button component</h4>
+<MyButton Name="Time" OnClickCallback="Click" />
+<span>@currentTime</span>
+
+@code {
+    private string currentTime = "";
+    private void Click() => currentTime = $"{DateTime.Now:T}";
+}

@@ -1,0 +1,9 @@
+﻿<button @onclick="OnClickCallback">@Name</button>
+
+@code {
+    [Parameter]
+    public string Name { get; set; } = "button";
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClickCallback { get; set; }
+}
